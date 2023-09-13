@@ -1,8 +1,12 @@
+from __future__ import annotations
+
+from typing import Tuple
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 TOKEN = str
 TFIDF = float
-TOKEN_TFIDF_PAIR = tuple[TOKEN, TFIDF]
+TOKEN_TFIDF_PAIR = Tuple[TOKEN, TFIDF]
 
 
 class TfidfInterpreter:
