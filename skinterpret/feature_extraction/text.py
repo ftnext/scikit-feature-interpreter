@@ -9,7 +9,7 @@ TFIDF = float
 TOKEN_TFIDF_PAIR = Tuple[TOKEN, TFIDF]
 
 
-class TfidfInterpreter:
+class InterpretableTfidfVectorizer:
     """
     >>> corpus = [
     ...     "This is the first document.",
@@ -18,7 +18,7 @@ class TfidfInterpreter:
     ...     "Is this the first document?",
     ... ]
     >>> vectorizer = TfidfVectorizer().fit(corpus)
-    >>> interpreter = TfidfInterpreter(vectorizer)
+    >>> interpreter = InterpretableTfidfVectorizer(vectorizer)
     >>> tfidf = interpreter.interpret(corpus[0])
     >>> for item in tfidf:
     ...     print(item[0], item[1])

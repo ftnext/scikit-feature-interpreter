@@ -1,5 +1,6 @@
-from skinterpret.feature_extraction.text import TfidfInterpreter
 from sklearn.feature_extraction.text import TfidfVectorizer
+
+from skinterpret.feature_extraction.text import InterpretableTfidfVectorizer
 
 CORPUS = [
     "This is the first document.",
@@ -13,7 +14,7 @@ def test_can_create_from_fitted_vectorizer():
     vectorizer = TfidfVectorizer()
     vectorizer.fit(CORPUS)
 
-    interpreter = TfidfInterpreter(vectorizer)
+    interpreter = InterpretableTfidfVectorizer(vectorizer)
 
     assert interpreter.vectorizer is vectorizer
 
@@ -22,7 +23,7 @@ def test_interpret():
     vectorizer = TfidfVectorizer()
     vectorizer.fit(CORPUS)
 
-    interpreter = TfidfInterpreter(vectorizer)
+    interpreter = InterpretableTfidfVectorizer(vectorizer)
     actual = interpreter.interpret(CORPUS[0])
 
     expected = [
