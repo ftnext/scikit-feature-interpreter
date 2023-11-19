@@ -24,9 +24,9 @@ class InterpretableTfidfVectorizer:
     ...     print(item[0], item[1])
     first 0.5802858236844359
     document 0.46979138557992045
-    this 0.38408524091481483
-    the 0.38408524091481483
     is 0.38408524091481483
+    the 0.38408524091481483
+    this 0.38408524091481483
     """
 
     def __init__(self, vectorizer: TfidfVectorizer) -> None:
@@ -40,4 +40,4 @@ class InterpretableTfidfVectorizer:
             (token, tfidf_array[self.vectorizer.vocabulary_[token]])
             for token in tokens
         ]
-        return sorted(pairs, key=lambda pair: pair[1], reverse=True)
+        return sorted(pairs, key=lambda pair: (-pair[1], pair[0]))
