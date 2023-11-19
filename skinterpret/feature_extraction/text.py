@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from typing import Tuple
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -7,6 +8,20 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 TOKEN = str
 TFIDF = float
 TOKEN_TFIDF_PAIR = Tuple[TOKEN, TFIDF]
+
+
+class TfidfInterpreter:
+    def __init__(self, id_to_term: Mapping[int, str]) -> None:
+        self.id_to_term = id_to_term
+
+    def interpret(self, tfidf) -> list[TOKEN_TFIDF_PAIR]:
+        assert len(tfidf) == len(self.id_to_term)
+
+        nonzero_index = [
+            index for index, value in enumerate(tfidf) if value != 0
+        ]
+        pairs = [(self.id_to_term[i], tfidf[i]) for i in nonzero_index]
+        return sorted(pairs, key=lambda pair: (-pair[1], pair[0]))
 
 
 class InterpretableTfidfVectorizer:
@@ -33,11 +48,9 @@ class InterpretableTfidfVectorizer:
         self.vectorizer = vectorizer
 
     def interpret(self, document: str) -> list[TOKEN_TFIDF_PAIR]:
+        interpreter = TfidfInterpreter(
+            {id: term for term, id in self.vectorizer.vocabulary_.items()}
+        )
         tfidf_vector = self.vectorizer.transform([document])[0]
         tfidf_array = tfidf_vector.toarray()[0]
-        tokens = self.vectorizer.inverse_transform(tfidf_vector)[0]
-        pairs = [
-            (token, tfidf_array[self.vectorizer.vocabulary_[token]])
-            for token in tokens
-        ]
-        return sorted(pairs, key=lambda pair: (-pair[1], pair[0]))
+        return interpreter.interpret(tfidf_array)
