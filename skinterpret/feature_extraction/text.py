@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Tuple
 
+import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 TOKEN = str
@@ -11,6 +12,15 @@ TOKEN_TFIDF_PAIR = Tuple[TOKEN, TFIDF]
 
 
 class TfidfInterpreter:
+    """
+    >>> interpreter = TfidfInterpreter({0: "a", 1: "b", 2: "c", 3: "d"})
+    >>> for item in interpreter.interpret(np.array([0.5, 0.8, 0.0, 0.3])):
+    ...     print(item)
+    ('b', 0.8)
+    ('a', 0.5)
+    ('d', 0.3)
+    """
+
     def __init__(self, id_to_term: Mapping[int, str]) -> None:
         self.id_to_term = id_to_term
 
