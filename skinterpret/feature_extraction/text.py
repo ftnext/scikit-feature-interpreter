@@ -27,9 +27,7 @@ class TfidfInterpreter:
     def interpret(self, tfidf) -> list[TOKEN_TFIDF_PAIR]:
         assert len(tfidf) == len(self.id_to_term)
 
-        nonzero_index = [
-            index for index, value in enumerate(tfidf) if value != 0
-        ]
+        nonzero_index = np.nonzero(tfidf)[0]
         pairs = [(self.id_to_term[i], tfidf[i]) for i in nonzero_index]
         return sorted(pairs, key=lambda pair: (-pair[1], pair[0]))
 
