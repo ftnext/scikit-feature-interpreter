@@ -4,6 +4,7 @@ from collections.abc import Mapping
 from typing import Tuple
 
 import numpy as np
+import numpy.typing as npt
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 TOKEN = str
@@ -24,7 +25,9 @@ class TfidfInterpreter:
     def __init__(self, id_to_term: Mapping[int, str]) -> None:
         self.id_to_term = id_to_term
 
-    def interpret(self, tfidf) -> list[TOKEN_TFIDF_PAIR]:
+    def interpret(
+        self, tfidf: npt.NDArray[np.float64]
+    ) -> list[TOKEN_TFIDF_PAIR]:
         assert len(tfidf) == len(self.id_to_term)
 
         nonzero_index = np.nonzero(tfidf)[0]
