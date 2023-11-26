@@ -4,7 +4,6 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scikit-feature-interpreter"
-version = "0.0.3"
 description = "scikit-learn API compatible feature interpreter"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -26,6 +25,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 dependencies = ["scikit-learn"]
+dynamic = ["version"]
 
 [project.urls]
 Repository = "https://github.com/ftnext/scikit-feature-interpreter"
@@ -34,3 +34,6 @@ Repository = "https://github.com/ftnext/scikit-feature-interpreter"
 testing = ["pytest"]
 lint = ["flake8", "black", "isort"]
 dev = ["wheel", "build", "twine"]
+
+[tool.setuptools.dynamic]
+version = { attr = "skinterpret.__version__" }
