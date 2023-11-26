@@ -22,5 +22,4 @@ jobs:
           python -m pip install .[testing]
       - name: Run tests
         run: |
-          pytest -svv
-          python -m doctest skinterpret/feature_extraction/text.py -v
+          pytest -svv --doctest-modules
